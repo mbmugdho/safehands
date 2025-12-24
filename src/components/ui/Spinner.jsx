@@ -1,11 +1,3 @@
-import React from 'react';
-
-const Spinner = () => {
-  return (
-    <div>
-      
-    </div>
-  );
-};
-
-export default Spinner;
+export default function Spinner() {
+  return <span className="loading loading-spinner loading-lg text-primary" />;
+}

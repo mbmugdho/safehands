@@ -1,11 +1,7 @@
-import React from 'react';
+'use client'
 
-const providers = () => {
-  return (
-    <div>
-      
-    </div>
-  );
-};
+import PageTransition from '@/components/animation/PageTransition'
 
-export default providers;
+export default function Providers({ children }) {
+  return <PageTransition>{children}</PageTransition>
+}

@@ -1,11 +1,9 @@
-import React from 'react';
+import Spinner from "@/components/ui/Spinner";
 
-const loading = () => {
+export default function Loading() {
   return (
-    <div>
-      
+    <div className="min-h-[60vh] flex items-center justify-center">
+      <Spinner />
     </div>
   );
-};
-
-export default loading;
+}
