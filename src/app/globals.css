@@ -8,118 +8,280 @@
   --sh-300: #68bbe3;
 }
 
-html,
-body {
-  height: 100%;
+/* ---------------- Base ---------------- */
+@layer base {
+  html,
+  body {
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+      Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans',
+      sans-serif;
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    
+    background: hsl(var(--b1));
+    color: hsl(var(--bc));
+    min-height: 100vh;
+  }
 }
 
-html {
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body {
-  background: hsl(var(--b1));
-  color: hsl(var(--bc));
-}
-
-/* Main content background (apply to <main>, not body) */
-.safehands-main-bg {
-  background-color: hsl(var(--b1));
-  background-image: radial-gradient(
-      1100px circle at 15% 10%,
-      rgba(104, 187, 227, 0.35),
-      transparent 55%
-    ),
-    radial-gradient(
-      900px circle at 85% 0%,
-      rgba(14, 134, 212, 0.3),
-      transparent 55%
-    ),
-    radial-gradient(
-      900px circle at 25% 90%,
-      rgba(5, 92, 157, 0.22),
-      transparent 60%
-    ),
-    linear-gradient(
-      135deg,
-      rgba(0, 48, 96, 0.1),
-      rgba(14, 134, 212, 0.06),
-      rgba(104, 187, 227, 0.1)
-    );
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-}
-
-[data-theme='safehandsDark'] .safehands-main-bg {
-  background-color: hsl(var(--b1));
-  background-image: radial-gradient(
-      1100px circle at 15% 10%,
-      rgba(104, 187, 227, 0.18),
-      transparent 60%
-    ),
-    radial-gradient(
-      900px circle at 85% 0%,
-      rgba(14, 134, 212, 0.16),
-      transparent 60%
-    ),
-    radial-gradient(
-      900px circle at 25% 90%,
-      rgba(5, 92, 157, 0.14),
-      transparent 65%
-    ),
-    linear-gradient(
-      135deg,
-      rgba(0, 48, 96, 0.18),
-      rgba(14, 134, 212, 0.08),
-      rgba(104, 187, 227, 0.12)
-    );
-}
-
-/* Stronger test background (use on a hero/section to preview vibe) */
-.safehands-test-bg {
-  background-image: radial-gradient(
-      1200px circle at 10% 20%,
-      rgba(104, 187, 227, 0.55),
-      transparent 55%
-    ),
-    radial-gradient(
-      1000px circle at 95% 10%,
-      rgba(14, 134, 212, 0.5),
-      transparent 55%
-    ),
-    radial-gradient(
-      900px circle at 20% 95%,
-      rgba(5, 92, 157, 0.42),
-      transparent 60%
-    ),
-    linear-gradient(
-      135deg,
-      rgba(0, 48, 96, 0.35),
-      rgba(14, 134, 212, 0.18),
-      rgba(104, 187, 227, 0.22)
-    );
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-/* Simple brand gradient utility */
-.bg-safehands-gradient {
-  background: linear-gradient(
-    135deg,
-    var(--sh-900),
-    var(--sh-500),
-    var(--sh-300)
-  );
-}
-
-/* 1440px max container */
+/* ---------------- Utilities ---------------- */
 @layer utilities {
+  /* 1440px container */
   .sh-container {
-    @apply mx-auto w-full max-w-[1440px] px-4;
+    @apply w-full max-w-[1440px] mx-auto px-4;
+  }
+
+  /* --------- Page/Main background --------- */
+  .safehands-main-bg {
+    background-color: hsl(var(--b1));
+    background-image: radial-gradient(
+        1100px circle at 15% 10%,
+        rgba(104, 187, 227, 0.35),
+        transparent 55%
+      ),
+      radial-gradient(
+        900px circle at 85% 0%,
+        rgba(14, 134, 212, 0.3),
+        transparent 55%
+      ),
+      radial-gradient(
+        900px circle at 25% 90%,
+        rgba(5, 92, 157, 0.22),
+        transparent 60%
+      ),
+      linear-gradient(
+        135deg,
+        rgba(0, 48, 96, 0.1),
+        rgba(14, 134, 212, 0.06),
+        rgba(104, 187, 227, 0.1)
+      );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
+  /* Navy dark mode main background  */
+  html[data-theme='safehandsDark'] .safehands-main-bg {
+    background-color: var(--sh-900);
+    background-image: radial-gradient(
+        950px circle at 12% 12%,
+        rgba(104, 187, 227, 0.14),
+        transparent 55%
+      ),
+      radial-gradient(
+        900px circle at 88% 6%,
+        rgba(14, 134, 212, 0.12),
+        transparent 55%
+      ),
+      radial-gradient(
+        900px circle at 25% 92%,
+        rgba(5, 92, 157, 0.14),
+        transparent 60%
+      ),
+      linear-gradient(135deg, #003060 0%, #02284f 45%, #055c9d 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
+  /* --------- Section backgrounds  --------- */
+  .bg-hero-surface {
+    background: radial-gradient(
+        700px 400px at 0% 0%,
+        rgba(104, 187, 227, 0.22) 0%,
+        transparent 55%
+      ),
+      radial-gradient(
+        600px 350px at 100% 5%,
+        rgba(14, 134, 212, 0.22) 0%,
+        transparent 55%
+      ),
+      linear-gradient(135deg, #ffffff 0%, #f3f8fd 40%, #e5f0fa 100%);
+  }
+
+  .bg-section-soft {
+    background: linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #f3f8fd 30%,
+      #e5f0fa 70%,
+      #ffffff 100%
+    );
+  }
+
+  .bg-section-soft2 {
+    background: linear-gradient(
+      135deg,
+      #f3f8fd 0%,
+      #ffffff 35%,
+      #e5f0fa 80%,
+      #f3f8fd 100%
+    );
+  }
+
+  /* Navy versions for dark mode */
+  html[data-theme='safehandsDark'] .bg-hero-surface {
+    background: radial-gradient(
+        900px 520px at 0% 0%,
+        rgba(104, 187, 227, 0.12) 0%,
+        transparent 55%
+      ),
+      radial-gradient(
+        850px 480px at 100% 10%,
+        rgba(14, 134, 212, 0.1) 0%,
+        transparent 55%
+      ),
+      linear-gradient(135deg, #003060 0%, #02284f 55%, #055c9d 100%);
+  }
+
+  html[data-theme='safehandsDark'] .bg-section-soft,
+  html[data-theme='safehandsDark'] .bg-section-soft2 {
+    background: linear-gradient(135deg, #003060 0%, #02284f 55%, #011f3d 100%);
+  }
+
+  /* --------- Brand helpers --------- */
+  .text-brand-deep {
+    color: var(--sh-900);
+  }
+  .text-brand-main {
+    color: var(--sh-700);
+  }
+  .text-brand-accent {
+    color: var(--sh-500);
+  }
+  .text-brand-soft {
+    color: var(--sh-300);
+  }
+
+  html[data-theme='safehandsDark'] .text-brand-deep,
+  html[data-theme='safehandsDark'] .text-brand-main,
+  html[data-theme='safehandsDark'] .text-brand-accent,
+  html[data-theme='safehandsDark'] .text-brand-soft {
+    color: hsl(var(--bc));
+  }
+
+  /* --------- Animated gradient text  --------- */
+  .text-gradient-hero {
+    background-image: linear-gradient(
+      45deg,
+      var(--sh-900),
+      var(--sh-500),
+      var(--sh-300),
+      var(--sh-500),
+      var(--sh-900)
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: hero-gradient-move 3.5s ease-in-out infinite;
+  }
+
+  @keyframes hero-gradient-move {
+    0% {
+      background-position: 0% center;
+    }
+    50% {
+      background-position: 100% center;
+    }
+    100% {
+      background-position: 0% center;
+    }
+  }
+
+  /* --------- Buttons --------- */
+  .btn-sh-gradient {
+    @apply font-semibold text-white;
+    background-image: linear-gradient(135deg, #055c9d, #003060);
+    box-shadow: 0 10px 30px rgba(104, 187, 227, 0.35);
+    border-color: transparent;
+  }
+
+  .btn-sh-gradient:hover {
+    filter: brightness(1.06);
+    box-shadow: 0 12px 34px rgba(104, 187, 227, 0.45);
+  }
+
+  .btn-sh-gradient:active {
+    transform: translateY(1px);
+    box-shadow: 0 8px 22px rgba(104, 187, 227, 0.28);
+  }
+
+  /* Optional outline button for later */
+  .btn-sh-outline {
+    @apply font-semibold;
+    background: transparent;
+    border-radius: var(--rounded-btn);
+    border: 1px solid color-mix(in srgb, var(--sh-300) 55%, transparent);
+    padding: 0.5rem 0.9rem;
+  }
+
+  html[data-theme='safehandsDark'] .btn-sh-outline {
+    border-color: rgba(104, 187, 227, 0.35);
+    color: hsl(var(--bc));
+  }
+
+  /* --------- Nav links + active route (global) --------- */
+  .sh-navlink {
+    @apply px-3 py-2 font-medium transition;
+    border-radius: var(--rounded-btn);
+  }
+
+  .sh-navlink:hover {
+    background: color-mix(in srgb, #68bbe3 14%, transparent);
+  }
+
+  /* Active route styling via aria-current */
+  .sh-navlink[aria-current='page'] {
+    background-image: linear-gradient(135deg, #055c9d, #003060);
+    color: #fff;
+    box-shadow: 0 10px 26px rgba(104, 187, 227, 0.32);
+    border-radius: var(--rounded-btn);
+  }
+
+  /* --------- Glass card  --------- */
+  .card-glass-brand {
+    border-radius: 1rem;
+    border: 1px solid color-mix(in srgb, hsl(var(--bc)) 12%, transparent);
+    background: color-mix(in srgb, hsl(var(--b1)) 78%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+  }
+
+  html[data-theme='safehandsDark'] .card-glass-brand {
+    background: rgba(0, 48, 96, 0.5);
+    border-color: rgba(104, 187, 227, 0.18);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+  }
+
+  /* --------- Animations --------- */
+  .animate-float-soft {
+    animation: float-soft 6s ease-in-out infinite;
+  }
+
+  @keyframes float-soft {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
   }
 }

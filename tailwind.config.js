@@ -29,15 +29,19 @@ module.exports = {
       },
       {
         safehandsDark: {
-          primary: '#0E86D4',
-          secondary: '#68BBE3',
+          // colors for actions/CTAs
+          primary: '#68BBE3',
+          secondary: '#0E86D4',
           accent: '#055C9D',
           info: '#68BBE3',
+
+          // DARK SURFACES 
           neutral: '#003060',
-          'base-100': '#071723',
-          'base-200': '#06131D',
-          'base-300': '#050F17',
+          'base-100': '#003060',
+          'base-200': '#02284f', 
+          'base-300': '#011f3d', 
           'base-content': '#EAF6FF',
+
           success: '#22C55E',
           warning: '#FBBF24',
           error: '#EF4444',
