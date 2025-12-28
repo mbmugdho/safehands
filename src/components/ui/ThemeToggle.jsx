@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { Sun, Moon } from 'lucide-react'
 
 const LIGHT = 'safehandsLight'
 const DARK = 'safehandsDark'
@@ -8,12 +9,13 @@ const STORAGE_KEY = 'safehands-theme'
 
 function getInitialTheme() {
   if (typeof window === 'undefined') return LIGHT
+
   const saved = localStorage.getItem(STORAGE_KEY)
   if (saved === LIGHT || saved === DARK) return saved
-  const prefersDark =
-    window.matchMedia &&
-    window.matchMedia('(prefers-color-scheme: dark)').matches
-  return prefersDark ? DARK : LIGHT
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? DARK
+    : LIGHT
 }
 
 export default function ThemeToggle() {
@@ -21,9 +23,9 @@ export default function ThemeToggle() {
   const [theme, setTheme] = useState(LIGHT)
 
   useEffect(() => {
-    const t = getInitialTheme()
-    setTheme(t)
-    document.documentElement.setAttribute('data-theme', t)
+    const initial = getInitialTheme()
+    setTheme(initial)
+    document.documentElement.setAttribute('data-theme', initial)
     setMounted(true)
   }, [])
 
@@ -37,21 +39,26 @@ export default function ThemeToggle() {
     return (
       <button
         type="button"
-        className="btn btn-ghost btn-circle"
-        disabled
         aria-label="Toggle theme"
+        className="btn btn-ghost btn-circle w-10 h-10 opacity-0"
       />
     )
   }
 
+  const isDark = theme === DARK
+
   return (
     <button
       type="button"
-      className="btn btn-ghost btn-circle"
       aria-label="Toggle theme"
-      onClick={() => setTheme((t) => (t === DARK ? LIGHT : DARK))}
+      onClick={() => setTheme(isDark ? LIGHT : DARK)}
+      className="btn btn-ghost btn-circle w-10 h-10 shrink-0 transition hover:bg-base-200"
     >
-      {theme === DARK ? 'Light' : 'Dark'}
+      {isDark ? (
+        <Sun size={18} className="text-yellow-400" />
+      ) : (
+        <Moon size={18} className="text-sky-500" />
+      )}
     </button>
   )
 }

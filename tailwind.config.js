@@ -18,10 +18,14 @@ module.exports = {
           accent: '#0E86D4',
           info: '#68BBE3',
           neutral: '#0B1F33',
+
           'base-100': '#FFFFFF',
           'base-200': '#F3F8FD',
           'base-300': '#E5F0FA',
-          'base-content': '#0B1F33',
+
+          // All text in light mode ≈ brand deep blue
+          'base-content': '#003060',
+
           success: '#16A34A',
           warning: '#F59E0B',
           error: '#DC2626',
@@ -29,7 +33,7 @@ module.exports = {
       },
       {
         safehandsDark: {
-          // colors for actions/CTAs
+          // colors for actions
           primary: '#68BBE3',
           secondary: '#0E86D4',
           accent: '#055C9D',
@@ -38,8 +42,10 @@ module.exports = {
           // DARK SURFACES 
           neutral: '#003060',
           'base-100': '#003060',
-          'base-200': '#02284f', 
-          'base-300': '#011f3d', 
+          'base-200': '#02284f',
+          'base-300': '#011f3d',
+
+          // Light / bluish text on dark navy
           'base-content': '#EAF6FF',
 
           success: '#22C55E',

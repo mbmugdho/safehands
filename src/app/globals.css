@@ -1,11 +1,23 @@
 @import 'tailwindcss';
 
-/* SafeHands brand palette */
+/* SafeHands Brand Palette */
 :root {
   --sh-900: #003060;
   --sh-700: #055c9d;
   --sh-500: #0e86d4;
   --sh-300: #68bbe3;
+
+  /*  (LIGHT MODE) */
+  --text-strong: #003060;
+  --text-muted: rgba(0, 48, 96, 0.7);
+  --text-soft: rgba(0, 48, 96, 0.55);
+}
+
+/* Dark mode  */
+html[data-theme='safehandsDark'] {
+  --text-strong: #eaf6ff;
+  --text-muted: rgba(234, 246, 255, 0.78);
+  --text-soft: rgba(234, 246, 255, 0.6);
 }
 
 /* ---------------- Base ---------------- */
@@ -21,7 +33,6 @@
   }
 
   body {
-    
     font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
       Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans',
       sans-serif;
@@ -30,21 +41,20 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    
     background: hsl(var(--b1));
-    color: hsl(var(--bc));
+    color: var(--text-strong);
     min-height: 100vh;
   }
 }
 
 /* ---------------- Utilities ---------------- */
 @layer utilities {
-  /* 1440px container */
+  /* Container */
   .sh-container {
     @apply w-full max-w-[1440px] mx-auto px-4;
   }
 
-  /* --------- Page/Main background --------- */
+  /* Main background */
   .safehands-main-bg {
     background-color: hsl(var(--b1));
     background-image: radial-gradient(
@@ -73,7 +83,6 @@
     background-size: cover;
   }
 
-  /* Navy dark mode main background  */
   html[data-theme='safehandsDark'] .safehands-main-bg {
     background-color: var(--sh-900);
     background-image: radial-gradient(
@@ -92,26 +101,9 @@
         transparent 60%
       ),
       linear-gradient(135deg, #003060 0%, #02284f 45%, #055c9d 100%);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
   }
 
-  /* --------- Section backgrounds  --------- */
-  .bg-hero-surface {
-    background: radial-gradient(
-        700px 400px at 0% 0%,
-        rgba(104, 187, 227, 0.22) 0%,
-        transparent 55%
-      ),
-      radial-gradient(
-        600px 350px at 100% 5%,
-        rgba(14, 134, 212, 0.22) 0%,
-        transparent 55%
-      ),
-      linear-gradient(135deg, #ffffff 0%, #f3f8fd 40%, #e5f0fa 100%);
-  }
-
+  /* Section backgrounds */
   .bg-section-soft {
     background: linear-gradient(
       135deg,
@@ -132,48 +124,33 @@
     );
   }
 
-  /* Navy versions for dark mode */
-  html[data-theme='safehandsDark'] .bg-hero-surface {
-    background: radial-gradient(
-        900px 520px at 0% 0%,
-        rgba(104, 187, 227, 0.12) 0%,
-        transparent 55%
-      ),
-      radial-gradient(
-        850px 480px at 100% 10%,
-        rgba(14, 134, 212, 0.1) 0%,
-        transparent 55%
-      ),
-      linear-gradient(135deg, #003060 0%, #02284f 55%, #055c9d 100%);
-  }
-
   html[data-theme='safehandsDark'] .bg-section-soft,
   html[data-theme='safehandsDark'] .bg-section-soft2 {
     background: linear-gradient(135deg, #003060 0%, #02284f 55%, #011f3d 100%);
   }
 
-  /* --------- Brand helpers --------- */
+  /* Brand text */
   .text-brand-deep {
-    color: var(--sh-900);
+    color: var(--text-strong);
   }
+
   .text-brand-main {
-    color: var(--sh-700);
+    color: var(--text-muted);
   }
+
+  .text-brand-soft {
+    color: var(--text-soft);
+  }
+
   .text-brand-accent {
     color: var(--sh-500);
   }
-  .text-brand-soft {
+
+  html[data-theme='safehandsDark'] .text-brand-accent {
     color: var(--sh-300);
   }
 
-  html[data-theme='safehandsDark'] .text-brand-deep,
-  html[data-theme='safehandsDark'] .text-brand-main,
-  html[data-theme='safehandsDark'] .text-brand-accent,
-  html[data-theme='safehandsDark'] .text-brand-soft {
-    color: hsl(var(--bc));
-  }
-
-  /* --------- Animated gradient text  --------- */
+  /* Gradient hero text */
   .text-gradient-hero {
     background-image: linear-gradient(
       45deg,
@@ -202,12 +179,15 @@
     }
   }
 
-  /* --------- Buttons --------- */
+  /* Buttons */
   .btn-sh-gradient {
-    @apply font-semibold text-white;
-    background-image: linear-gradient(135deg, #055c9d, #003060);
-    box-shadow: 0 10px 30px rgba(104, 187, 227, 0.35);
+    @apply font-semibold rounded-2xl;
+    background-image: linear-gradient(135deg, #0e86d4, #68bbe3);
+    box-shadow: 0 10px 30px rgba(104, 187, 227, 0.3);
     border-color: transparent;
+    padding: 0.75rem 1.75rem;
+    transition: all 0.3s ease;
+    color: #ffffff;
   }
 
   .btn-sh-gradient:hover {
@@ -220,46 +200,49 @@
     box-shadow: 0 8px 22px rgba(104, 187, 227, 0.28);
   }
 
-  /* Optional outline button for later */
   .btn-sh-outline {
-    @apply font-semibold;
+    @apply font-semibold rounded-2xl;
     background: transparent;
-    border-radius: var(--rounded-btn);
     border: 1px solid color-mix(in srgb, var(--sh-300) 55%, transparent);
-    padding: 0.5rem 0.9rem;
+    padding: 0.75rem 1.75rem;
+    transition: all 0.3s ease;
+  }
+
+  .btn-sh-outline:hover {
+    background-color: color-mix(in srgb, var(--sh-300) 10%, transparent);
+    border-color: var(--sh-300);
   }
 
   html[data-theme='safehandsDark'] .btn-sh-outline {
     border-color: rgba(104, 187, 227, 0.35);
-    color: hsl(var(--bc));
+    color: var(--text-strong);
   }
 
-  /* --------- Nav links + active route (global) --------- */
+  /* Nav links */
   .sh-navlink {
     @apply px-3 py-2 font-medium transition;
-    border-radius: var(--rounded-btn);
+    border-radius: 0.75rem;
+    color: var(--text-strong);
   }
 
   .sh-navlink:hover {
     background: color-mix(in srgb, #68bbe3 14%, transparent);
   }
 
-  /* Active route styling via aria-current */
   .sh-navlink[aria-current='page'] {
-    background-image: linear-gradient(135deg, #055c9d, #003060);
+    background-image: linear-gradient(180deg, #0e86d4, #68bbe6);
     color: #fff;
     box-shadow: 0 10px 26px rgba(104, 187, 227, 0.32);
-    border-radius: var(--rounded-btn);
   }
 
-  /* --------- Glass card  --------- */
+  /* Glass card */
   .card-glass-brand {
     border-radius: 1rem;
     border: 1px solid color-mix(in srgb, hsl(var(--bc)) 12%, transparent);
     background: color-mix(in srgb, hsl(var(--b1)) 78%, transparent);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+    color: var(--text-strong);
   }
 
   html[data-theme='safehandsDark'] .card-glass-brand {
@@ -268,20 +251,85 @@
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
   }
 
-  /* --------- Animations --------- */
+  /* Soft float */
   .animate-float-soft {
     animation: float-soft 6s ease-in-out infinite;
   }
 
   @keyframes float-soft {
     0% {
-      transform: translateY(0px);
+      transform: translateY(0);
     }
     50% {
       transform: translateY(-8px);
     }
     100% {
-      transform: translateY(0px);
+      transform: translateY(0);
     }
+  }
+
+  /* Light mode: deep blue text everywhere, EXCEPT buttons & hero overlay  */
+  html[data-theme='safehandsLight'] body,
+  html[data-theme='safehandsLight']
+    body
+    *:not(.text-gradient-hero):not(.btn):not(.btn-sh-gradient):not(
+      .btn-sh-outline
+    ):not(.hero-overlay-text):not(.hero-overlay-text *) {
+    color: #003060 !important;
+  }
+
+  /* Dark mode: light bluish white text everywhere, EXCEPT buttons & hero overlay */
+  html[data-theme='safehandsDark'] body,
+  html[data-theme='safehandsDark']
+    body
+    *:not(.text-gradient-hero):not(.btn):not(.btn-sh-gradient):not(
+      .btn-sh-outline
+    ):not(.hero-overlay-text):not(.hero-overlay-text *) {
+    color: #eaf6ff !important;
+  }
+
+  /* In dark mode, accent text becomes brand light blue */
+  html[data-theme='safehandsDark'] .text-brand-accent {
+    color: #68bbe3 !important;
+  }
+
+  /* Hero overlay text: always white in both themes */
+  html[data-theme='safehandsLight'] .hero-overlay-text,
+  html[data-theme='safehandsLight']
+    .hero-overlay-text
+    *:not(.text-gradient-hero) {
+    color: #ffffff !important;
+  }
+
+  html[data-theme='safehandsDark'] .hero-overlay-text,
+  html[data-theme='safehandsDark']
+    .hero-overlay-text
+    *:not(.text-gradient-hero) {
+    color: #ffffff !important;
+  }
+
+  /* gradient hero text stays gradient in both themes */
+  .text-gradient-hero {
+    color: transparent !important;
+  }
+
+  /* Navbar + Footer backgrounds by theme */
+  html[data-theme='safehandsLight'] header,
+  html[data-theme='safehandsLight'] footer {
+    background-color: rgba(
+      243,
+      248,
+      253,
+      0.6
+    ) !important; 
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-color: rgba(0, 48, 96, 0.12) !important;
+  }
+
+  html[data-theme='safehandsDark'] header,
+  html[data-theme='safehandsDark'] footer {
+    background-color: rgba(0, 48, 96, 0.9) !important;
+    border-color: rgba(104, 187, 227, 0.25) !important;
   }
 }

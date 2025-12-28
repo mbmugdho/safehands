@@ -17,8 +17,7 @@ export default function RootLayout({ children }) {
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <Navbar />
 
-        {/* gradient only here */}
-        <main className="safehands-main-bg flex-1">
+        <main className="safehands-main-bg flex-1 pt-16">
           <Providers>{children}</Providers>
         </main>
 
