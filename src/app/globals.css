@@ -268,23 +268,27 @@ html[data-theme='safehandsDark'] {
     }
   }
 
-  /* Light mode: deep blue text everywhere, EXCEPT buttons & hero overlay  */
+  /* Light mode:- deep blue text everywhere, EXCEPT buttons, hero overlay, service cards, and badges */
   html[data-theme='safehandsLight'] body,
   html[data-theme='safehandsLight']
     body
     *:not(.text-gradient-hero):not(.btn):not(.btn-sh-gradient):not(
       .btn-sh-outline
-    ):not(.hero-overlay-text):not(.hero-overlay-text *) {
+    ):not(.hero-overlay-text):not(.hero-overlay-text *):not(.service-card):not(
+      .service-card *
+    ):not(.badge):not(.badge *) {
     color: #003060 !important;
   }
 
-  /* Dark mode: light bluish white text everywhere, EXCEPT buttons & hero overlay */
+  /* Dark mode:- light bluish white text everywhere, EXCEPT buttons, hero overlay, service cards, and badges */
   html[data-theme='safehandsDark'] body,
   html[data-theme='safehandsDark']
     body
     *:not(.text-gradient-hero):not(.btn):not(.btn-sh-gradient):not(
       .btn-sh-outline
-    ):not(.hero-overlay-text):not(.hero-overlay-text *) {
+    ):not(.hero-overlay-text):not(.hero-overlay-text *):not(.service-card):not(
+      .service-card *
+    ):not(.badge):not(.badge *) {
     color: #eaf6ff !important;
   }
 
@@ -316,12 +320,7 @@ html[data-theme='safehandsDark'] {
   /* Navbar + Footer backgrounds by theme */
   html[data-theme='safehandsLight'] header,
   html[data-theme='safehandsLight'] footer {
-    background-color: rgba(
-      243,
-      248,
-      253,
-      0.6
-    ) !important; 
+    background-color: rgba(243, 248, 253, 0.6) !important;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-color: rgba(0, 48, 96, 0.12) !important;
