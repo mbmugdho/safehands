@@ -1,12 +1,57 @@
+'use client'
+
 import Link from 'next/link'
 import { IdCard, User, Mail, Phone, Lock } from 'lucide-react'
-
-export const metadata = {
-  title: 'Register | SafeHands',
-  description: 'Create your SafeHands account to book caregiving services.',
-}
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useState } from 'react'
 
 export default function RegisterPage() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const redirect = searchParams.get('redirect') || '/'
+
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+
+    const formData = new FormData(e.currentTarget)
+    const body = {
+      nid: formData.get('nid'),
+      name: formData.get('name'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      password: formData.get('password'),
+      confirmPassword: formData.get('confirmPassword'),
+    }
+
+    if (body.password !== body.confirmPassword) {
+      setError('Passwords do not match.')
+      setLoading(false)
+      return
+    }
+
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      setError(data.error || 'Registration failed.')
+      setLoading(false)
+      return
+    }
+
+  
+    router.push(`/login?redirect=${encodeURIComponent(redirect)}`)
+  }
+
   return (
     <section className="auth-page relative min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-[#003060] via-[#0E86D4] to-[#68BBE3]">
       <div className="absolute inset-0 bg-black/20" />
@@ -21,12 +66,21 @@ export default function RegisterPage() {
               Join SafeHands
             </h1>
             <p className="mt-2 text-xs text-white/80">
-              Book trusted baby sitting, elderly care, and home support services.
+              Book trusted baby sitting, elderly care, and home support
+              services.
             </p>
           </div>
 
-          {/* Form */}
-          <form className="mt-8 grid gap-6 md:grid-cols-2">
+          {error && (
+            <p className="mt-4 text-xs text-center text-red-200 bg-red-500/20 rounded-full px-3 py-1">
+              {error}
+            </p>
+          )}
+
+          <form
+            className="mt-8 grid gap-6 md:grid-cols-2"
+            onSubmit={handleSubmit}
+          >
             <div className="md:col-span-1">
               <label className="text-xs uppercase tracking-wide text-white/70">
                 NID Number
@@ -38,6 +92,7 @@ export default function RegisterPage() {
                   name="nid"
                   placeholder="Your NID number"
                   className="flex-1 bg-transparent outline-none border-none text-sm placeholder:text-white/60"
+                  required
                 />
               </div>
             </div>
@@ -53,6 +108,7 @@ export default function RegisterPage() {
                   name="name"
                   placeholder="Your full name"
                   className="flex-1 bg-transparent outline-none border-none text-sm placeholder:text-white/60"
+                  required
                 />
               </div>
             </div>
@@ -66,9 +122,10 @@ export default function RegisterPage() {
                 <input
                   type="email"
                   name="email"
-                  placeholder="test@gmail.com"
+                  placeholder="you@example.com"
                   className="flex-1 bg-transparent outline-none border-none text-sm placeholder:text-white/60"
                   autoComplete="email"
+                  required
                 />
               </div>
             </div>
@@ -82,9 +139,10 @@ export default function RegisterPage() {
                 <input
                   type="tel"
                   name="phone"
-                  placeholder="+8801000000000"
+                  placeholder="+8801XXXXXXXXX"
                   className="flex-1 bg-transparent outline-none border-none text-sm placeholder:text-white/60"
                   autoComplete="tel"
+                  required
                 />
               </div>
             </div>
@@ -101,13 +159,16 @@ export default function RegisterPage() {
                   placeholder="*******"
                   className="flex-1 bg-transparent outline-none border-none text-sm placeholder:text-white/60"
                   autoComplete="new-password"
+                  required
                 />
               </div>
               <p className="mt-2 text-[11px] text-white/75">
-                Must be at least 6 characters, with at least 1 uppercase and 1 lowercase letter.
+                Must be at least 6 characters, with at least 1 uppercase and 1
+                lowercase letter.
               </p>
             </div>
 
+           
             <div className="md:col-span-1">
               <label className="text-xs uppercase tracking-wide text-white/70">
                 Confirm Password
@@ -117,19 +178,22 @@ export default function RegisterPage() {
                 <input
                   type="password"
                   name="confirmPassword"
-                  placeholder="Rewrite your password"
+                  placeholder="Repeat password"
                   className="flex-1 bg-transparent outline-none border-none text-sm placeholder:text-white/60"
                   autoComplete="new-password"
+                  required
                 />
               </div>
             </div>
 
+           
             <div className="md:col-span-2 mt-4 space-y-3">
               <button
                 type="submit"
-                className="btn-sh-gradient w-full justify-center"
+                disabled={loading}
+                className="btn-sh-gradient w-full justify-center disabled:opacity-70"
               >
-                Create account
+                {loading ? 'Creating account...' : 'Create account'}
               </button>
               <p className="text-xs text-center text-white/80">
                 Already have an account?{' '}
