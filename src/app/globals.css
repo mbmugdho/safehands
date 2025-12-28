@@ -268,7 +268,8 @@ html[data-theme='safehandsDark'] {
     }
   }
 
-  /* Light mode:- deep blue text everywhere, EXCEPT buttons, hero overlay, service cards, and badges */
+  /* Light mode: deep blue text everywhere,
+   EXCEPT buttons, hero overlay, service cards, and auth pages */
   html[data-theme='safehandsLight'] body,
   html[data-theme='safehandsLight']
     body
@@ -276,11 +277,12 @@ html[data-theme='safehandsDark'] {
       .btn-sh-outline
     ):not(.hero-overlay-text):not(.hero-overlay-text *):not(.service-card):not(
       .service-card *
-    ):not(.badge):not(.badge *) {
+    ):not(.auth-page):not(.auth-page *) {
     color: #003060 !important;
   }
 
-  /* Dark mode:- light bluish white text everywhere, EXCEPT buttons, hero overlay, service cards, and badges */
+  /* Dark mode: light bluish white everywhere,
+   EXCEPT buttons, hero overlay, service cards, and auth pages */
   html[data-theme='safehandsDark'] body,
   html[data-theme='safehandsDark']
     body
@@ -288,7 +290,7 @@ html[data-theme='safehandsDark'] {
       .btn-sh-outline
     ):not(.hero-overlay-text):not(.hero-overlay-text *):not(.service-card):not(
       .service-card *
-    ):not(.badge):not(.badge *) {
+    ):not(.auth-page):not(.auth-page *) {
     color: #eaf6ff !important;
   }
 
