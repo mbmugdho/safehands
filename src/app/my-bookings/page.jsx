@@ -185,7 +185,7 @@ export default function MyBookingsPage() {
       <div className="sh-container">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
-            <p className="badge badge-info mb-4">My Bookings</p>
+            <p className="badge badge-info uppercase tracking-[0.18em] font-bold text-sm mb-4">My Bookings</p>
             <h1 className="text-2xl md:text-4xl font-extrabold text-brand-deep">
               Track your <span className="text-gradient-hero">SafeHands</span>{' '}
               bookings
@@ -231,7 +231,7 @@ export default function MyBookingsPage() {
         {!loading && !error && bookings.length === 0 && (
           <div className="mt-12 text-center text-base-content/70">
             <p>You do not have any bookings yet.</p>
-            <p className="mt-2">
+            <p className="mt-4">
               <Link href="/services" className="btn-sh-gradient text-sm">
                 Go to services
               </Link>

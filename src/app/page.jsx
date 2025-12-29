@@ -8,6 +8,12 @@ import Pricing from '@/components/home/Pricing'
 import HowItWorks from '@/components/home/HowItWorks'
 import FAQ from '@/components/home/FAQ'
 
+export const metadata = {
+  title: 'SafeHands | Trusted Baby & Elderly Care at Home',
+  description:
+    'SafeHands helps you book reliable babysitting, elderly care, and special care at home across Bangladesh. Simple, safe, and accessible caregiving.',
+}
+
 export default function HomePage() {
   return (
     <>

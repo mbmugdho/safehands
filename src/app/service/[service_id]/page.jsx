@@ -4,18 +4,21 @@ import { notFound } from 'next/navigation'
 import { getServiceById } from '@/lib/zapshift/services'
 
 export async function generateMetadata({ params }) {
-  const { service_id } = await params
+  const { service_id } = params
   const service = getServiceById(service_id)
 
   if (!service) {
     return {
       title: 'Service not found | SafeHands',
+      description: 'The requested caregiving service could not be found.',
     }
   }
 
   return {
-    title: `${service.name} | SafeHands`,
-    description: service.shortDescription,
+    title: `${service.name} | SafeHands Care Service`,
+    description:
+      service.shortDescription ||
+      (service.description ? service.description.slice(0, 150) : ''),
   }
 }
 
