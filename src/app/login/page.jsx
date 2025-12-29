@@ -97,13 +97,7 @@ export default function LoginPage() {
             </div>
 
             <div className="flex items-center justify-between text-xs text-white/80">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="checkbox checkbox-xs border-white/60 [--chkbg:#0E86D4] [--chkfg:white]"
-                />
-                <span>Remember me</span>
-              </label>
+              
               <button type="button" className="hover:underline">
                 Forgot password?
               </button>

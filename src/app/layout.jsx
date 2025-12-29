@@ -15,13 +15,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="safehandsLight">
       <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <Navbar />
+        <Providers>
+          <Navbar />
 
-        <main className="safehands-main-bg flex-1 pt-16">
-          <Providers>{children}</Providers>
-        </main>
+          <main className="safehands-main-bg flex-1 pt-16">
+            <Providers>{children}</Providers>
+          </main>
 
-        <Footer />
+          <Footer />
+        </Providers>
       </body>
     </html>
   )

@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
+import { useSession, signOut } from 'next-auth/react'
 import ThemeToggle from '@/components/ui/ThemeToggle'
 
 const LINKS = [
@@ -24,6 +25,10 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const menuRef = useRef(null)
+
+  const { data: session } = useSession()
+  const isLoggedIn = !!session?.user
+  const isAdmin = session?.user?.role === 'admin'
 
   useEffect(() => {
     const handler = (e) => {
@@ -50,7 +55,6 @@ export default function Navbar() {
         transition={{ duration: 0.45, ease: 'easeOut' }}
       >
         <nav className="sh-container flex h-16 items-center justify-between">
-          {/* logo & brand */}
           <Link href="/" className="flex items-center gap-2">
             <Image src="/logo.png" alt="SafeHands" width={34} height={34} />
             <span className="text-lg tracking-[0.12em] font-extrabold">
@@ -76,21 +80,52 @@ export default function Navbar() {
             <ThemeToggle />
 
             <div className="hidden lg:flex items-center gap-3">
-              <Link
-                href="/login"
-                className="btn btn-sh-gradient rounded-2xl px-4 py-2"
-              >
-                Login
-              </Link>
-              <Link
-                href="/register"
-                className="btn btn-sh-gradient rounded-2xl px-4 py-2"
-              >
-                Get Started
-              </Link>
+              {!isLoggedIn && (
+                <>
+                  <Link
+                    href="/login"
+                    className="btn btn-sh-gradient rounded-2xl px-4 py-2"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="btn btn-sh-gradient rounded-2xl px-4 py-2"
+                  >
+                    Get Started
+                  </Link>
+                </>
+              )}
+
+              {isLoggedIn && !isAdmin && (
+                <button
+                  type="button"
+                  onClick={() => signOut({ callbackUrl: '/' })}
+                  className="btn btn-sh-gradient rounded-2xl px-4 py-2"
+                >
+                  Logout
+                </button>
+              )}
+
+              {isLoggedIn && isAdmin && (
+                <>
+                  <Link
+                    href="/admin"
+                    className="btn btn-sh-gradient rounded-2xl px-4 py-2"
+                  >
+                    Admin Dashboard
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => signOut({ callbackUrl: '/' })}
+                    className="btn btn-sh-gradient rounded-2xl px-4 py-2"
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
             </div>
 
-            {/* Mobile Hamburger */}
             <button
               onClick={() => setOpen((v) => !v)}
               className="lg:hidden btn btn-ghost btn-circle"
@@ -102,7 +137,6 @@ export default function Navbar() {
         </nav>
       </motion.div>
 
-      {/* Mobile  Menu */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -129,18 +163,56 @@ export default function Navbar() {
               ))}
 
               <div className="pt-4 flex flex-col gap-2 border-t border-base-300 text-center">
-                <Link
-                  href="/login"
-                  className="btn btn-sh-gradient w-full rounded-2xl px-4 py-2"
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/register"
-                  className="btn btn-sh-gradient w-full rounded-2xl px-4 py-2"
-                >
-                  Get Started
-                </Link>
+                {!isLoggedIn && (
+                  <>
+                    <Link
+                      href="/login"
+                      className="btn btn-sh-gradient w-full rounded-2xl px-4 py-2"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      href="/register"
+                      className="btn btn-sh-gradient w-full rounded-2xl px-4 py-2"
+                    >
+                      Get Started
+                    </Link>
+                  </>
+                )}
+
+                {isLoggedIn && !isAdmin && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOpen(false)
+                      signOut({ callbackUrl: '/' })
+                    }}
+                    className="btn btn-sh-gradient w-full rounded-2xl px-4 py-2"
+                  >
+                    Logout
+                  </button>
+                )}
+
+                {isLoggedIn && isAdmin && (
+                  <>
+                    <Link
+                      href="/admin"
+                      className="btn btn-sh-gradient w-full rounded-2xl px-4 py-2"
+                    >
+                      Admin Dashboard
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setOpen(false)
+                        signOut({ callbackUrl: '/' })
+                      }}
+                      className="btn btn-sh-gradient w-full rounded-2xl px-4 py-2"
+                    >
+                      Logout
+                    </button>
+                  </>
+                )}
               </div>
             </ul>
           </motion.div>

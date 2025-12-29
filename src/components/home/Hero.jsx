@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, EffectFade } from 'swiper/modules'
+import { CircleArrowDown } from 'lucide-react';
 
 import 'swiper/css'
 import 'swiper/css/effect-fade'
@@ -79,8 +80,8 @@ export default function Hero() {
           transition={{ repeat: Infinity, duration: 1.5 }}
           className="flex flex-col items-center text-white/80 text-xs"
         >
-          <span>Scroll</span>
-          <div className="mt-1 h-6 w-[2px] bg-white/60 rounded-full" />
+          
+          <CircleArrowDown />
         </motion.div>
       </div>
     </section>

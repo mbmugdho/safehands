@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { hash } from 'bcryptjs'
 import { connectDB } from '@/lib/db'
 import User from '@/lib/models/User'
+import { isAdminEmail } from '@/lib/auth/isAdminEmail'
 
 export async function POST(req) {
   try {
@@ -40,18 +41,24 @@ export async function POST(req) {
 
     const passwordHash = await hash(password, 10)
 
+    const role = isAdminEmail(email) ? 'admin' : 'user'
+
     const user = await User.create({
       nid,
       name,
       email,
       phone,
       passwordHash,
+      role,
     })
 
     return NextResponse.json(
       {
         message: 'User registered successfully.',
-        user: { id: user._id.toString(), name: user.name, email: user.email },
+        user: { id: user._id.toString(), 
+          name: user.name, 
+          email: user.email,
+          role: user.role,},
       },
       { status: 201 }
     )
