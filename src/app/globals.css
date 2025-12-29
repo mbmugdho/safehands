@@ -251,6 +251,18 @@ html[data-theme='safehandsDark'] {
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
   }
 
+  /* SELECTED glass card state */
+  .card-glass-selected {
+    border-color: #0e86d4 !important; /* sh-500 */
+    background-color: color-mix(in srgb, #0e86d4 10%, transparent) !important;
+    box-shadow: 0 16px 40px rgba(14, 134, 212, 0.35) !important;
+  }
+
+  html[data-theme='safehandsDark'] .card-glass-selected {
+    border-color: #68bbe3 !important; /* sh-300 */
+    background-color: color-mix(in srgb, #68bbe3 16%, transparent) !important;
+  }
+
   /* Soft float */
   .animate-float-soft {
     animation: float-soft 6s ease-in-out infinite;
