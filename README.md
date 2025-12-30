@@ -1,36 +1,125 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SafeHands – Baby Sitting & Elderly Care Service Platform
 
-## Getting Started
+**Live demo:** [https://safehands-ltd.vercel.app/]
 
-First, run the development server:
+SafeHands is a **full-stack caregiving service platform** for booking trusted caregivers for children, elderly family members, and sick people at home. Users can browse services, book caregivers by duration and location, pay via Stripe (test mode), and track bookings. Admins can manage bookings, update statuses, and view analytics.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This project was built as a **final assignment**, focusing on making caregiving **simple, safe, and accessible**.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## ✨ Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### User-Facing Features
 
-## Learn More
+- **Responsive UI**
+  - Fully responsive across mobile, tablet, and desktop.
+  - Themed UI using **Tailwind CSS v4** + **DaisyUI**, with custom SafeHands styling.
 
-To learn more about Next.js, take a look at the following resources:
+- **Home Page**
+  - Hero slider with caregiving motivation.
+  - About section describing the platform’s mission.
+  - Services overview: Baby Care, Elderly Care, Sick Care.
+  - Pricing overview (hourly, day shift, night shift, live-in).
+  - “How it works” steps, testimonials, statistics, FAQ.
+  - Newsletter subscription section.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Services**
+  - `/services` – list of available services.
+  - `/service/[service_id]` – service detail page:
+    - Image, category, description, and tags.
+    - Pricing summary.
+    - “Book this service” button (redirects to login if not authenticated).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Authentication (NextAuth)**
+  - Email + password login using Credentials provider.
+  - Registration requires NID, name, email, phone, and password.
+  - Password validation (≥6 chars, at least 1 uppercase + 1 lowercase).
+  - Role-based access:
+    - `user` – regular users
+    - `admin` – admins, defined via `ADMIN_EMAILS` env variable.
+  - Sessions persist across reloads.
 
-## Deploy on Vercel
+- **Dynamic Booking Flow**
+  - `/booking/[service_id]` – private route for logged-in users.
+  - Booking form:
+    - Billing mode: Hourly or Shift.
+    - Duration: hours or days (hourly converted to 8h/day if needed).
+    - Location: division, district, city, area, full address.
+    - Live total cost calculation.
+  - Stripe Checkout integration (test mode).
+  - After payment success:
+    - Booking created with status `Confirmed`.
+    - Email invoice sent to user.
+  - Payment cancellation redirects to `/payment/cancel`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **My Bookings**
+  - `/my-bookings` – private route listing the logged-in user’s bookings.
+  - Shows service name, duration, location, total cost, status, booking ID.
+  - Actions:
+    - Cancel booking if status is `Pending`.
+    - Clear completed & cancelled bookings from user view.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **404 / Not Found**
+  - Custom `not-found.jsx` page with friendly “Go back home” button.
+
+---
+
+### Admin Features
+
+- **Admin Dashboard**
+  - `/admin` – protected, admin-only route.
+  - Displays:
+    - Total bookings, total revenue, active bookings.
+    - Status distribution chart (Pending / Confirmed / Completed / Cancelled).
+    - Bookings per service chart.
+  - Active bookings list:
+    - `Pending` bookings: Confirm / Cancel buttons.
+    - `Confirmed` bookings: Complete button.
+  - Status updates propagate to users in real-time.
+
+- **Service History**
+  - `/admin/history` – completed bookings only.
+  - Filter by date.
+  - Pagination for historical records.
+  - Tracks daily service counts and operational performance.
+
+- **Admin-only APIs**
+  - `GET /api/auth/admin` – fetch all bookings with user info.
+  - `PATCH /api/auth/admin` – update booking status (`Pending`, `Confirmed`, `Completed`, `Cancelled`).
+
+---
+
+### Email Invoices
+
+- After successful payment:
+  - Email invoice via **Nodemailer** (SMTP/Gmail in dev).
+  - Includes service name, booking ID, date/time, duration, location, status, total cost, and link to `/my-bookings`.
+
+---
+
+## 🛠 Tech Stack
+
+**Frontend**
+- Next.js 16 (App Router)
+- React 19 (preview)
+- Tailwind CSS v4 + DaisyUI
+- Framer Motion (animations)
+- Swiper (hero & testimonial sliders)
+- Lucide React & react-icons (icons)
+- Recharts (charts for admin)
+
+**Backend**
+- Next.js API Routes
+- NextAuth (Credentials provider)
+- MongoDB Atlas + Mongoose
+- Stripe (test payments)
+- Nodemailer (email invoices)
+- SweetAlert2 (confirmation dialogs)
+
+**Deployment**
+- Vercel
+- Environment variables configured for dev and prod.
+
+
+
