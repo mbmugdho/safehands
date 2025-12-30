@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Loader2 } from 'lucide-react'
 import Swal from 'sweetalert2'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 const statusClass = {
   Pending: 'badge badge-warning',
@@ -15,6 +17,9 @@ const statusClass = {
 const CLEARABLE_STATUSES = ['Completed', 'Cancelled']
 
 export default function MyBookingsPage() {
+  const { data: session, status: sessionStatus } = useSession()
+  const router = useRouter()
+
   const [bookings, setBookings] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -26,6 +31,11 @@ export default function MyBookingsPage() {
     try {
       const res = await fetch('/api/auth/bookings', { cache: 'no-store' })
       const data = await res.json()
+
+      if (res.status === 401) {
+        router.replace(`/login?redirect=/my-bookings`)
+        return
+      }
 
       if (!res.ok) {
         setError(data.error || 'Failed to load bookings.')
@@ -138,7 +148,6 @@ export default function MyBookingsPage() {
     if (!result.isConfirmed) return
 
     try {
-      
       const res = await fetch('/api/auth/bookings/clear', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -172,9 +181,19 @@ export default function MyBookingsPage() {
     }
   }
 
+  // When session status changes, decide whether to load or redirect
   useEffect(() => {
-    loadBookings()
-  }, [])
+    if (sessionStatus === 'loading') return
+
+    if (sessionStatus === 'unauthenticated') {
+      router.replace(`/login?redirect=/my-bookings`)
+      return
+    }
+
+    if (sessionStatus === 'authenticated') {
+      loadBookings()
+    }
+  }, [sessionStatus, router])
 
   const hasClearable = bookings.some((b) =>
     CLEARABLE_STATUSES.includes(b.status)
@@ -185,7 +204,9 @@ export default function MyBookingsPage() {
       <div className="sh-container">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
-            <p className="badge badge-info uppercase tracking-[0.18em] font-bold text-sm mb-4">My Bookings</p>
+            <p className="badge badge-info uppercase tracking-[0.18em] font-bold text-sm mb-4">
+              My Bookings
+            </p>
             <h1 className="text-2xl md:text-4xl font-extrabold text-brand-deep">
               Track your <span className="text-gradient-hero">SafeHands</span>{' '}
               bookings
@@ -289,7 +310,6 @@ export default function MyBookingsPage() {
                   </div>
                 </div>
 
-                
                 <div className="mt-5 flex justify-between items-center gap-3 text-xs">
                   <p className="text-base-content/60">
                     Booking ID:{' '}

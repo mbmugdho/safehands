@@ -14,6 +14,7 @@ export default function Footer() {
               alt="SafeHands logo"
               width={36}
               height={36}
+              className="h-10 w-auto"
             />
             <span className="text-lg font-bold text-primary">SafeHands</span>
           </div>

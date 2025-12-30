@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { getServiceById } from '@/lib/zapshift/services'
 
 export async function generateMetadata({ params }) {
-  const { service_id } = params
+  const { service_id } = await params
   const service = getServiceById(service_id)
 
   if (!service) {
@@ -40,6 +40,7 @@ export default async function ServiceDetailPage({ params }) {
               alt={service.name}
               width={1200}
               height={600}
+              priority
               className="h-80 md:h-120 w-full object-cover"
             />
           </div>

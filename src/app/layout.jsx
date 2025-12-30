@@ -13,7 +13,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-theme="safehandsLight">
+    <html lang="en" data-theme="safehandsLight" data-scroll-behavior="smooth"> 
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <Providers>
           <Navbar />

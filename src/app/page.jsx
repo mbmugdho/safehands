@@ -7,6 +7,7 @@ import RevealSection from '@/components/ui/RevealSection'
 import Pricing from '@/components/home/Pricing'
 import HowItWorks from '@/components/home/HowItWorks'
 import FAQ from '@/components/home/FAQ'
+import Newsletter from '@/components/home/Newsletter'
 
 export const metadata = {
   title: 'SafeHands | Trusted Baby & Elderly Care at Home',
@@ -45,6 +46,10 @@ export default function HomePage() {
 
       <RevealSection>
         <FAQ />
+      </RevealSection>
+
+      <RevealSection>
+        <Newsletter />
       </RevealSection>
     </>
   )

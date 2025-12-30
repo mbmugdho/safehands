@@ -4,35 +4,45 @@ import Link from 'next/link'
 import { Mail, Lock, User } from 'lucide-react'
 import { signIn } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Spinner from '@/components/ui/Spinner'
 
 export default function LoginPage() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const redirect = searchParams.get('redirect') || '/'
 
+  const urlError = searchParams.get('error') || ''
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (!urlError) {
+      setError('')
+      return
+    }
+
+    try {
+      setError(decodeURIComponent(urlError))
+    } catch {
+      setError(urlError)
+    }
+  }, [urlError])
 
   async function handleSubmit(e) {
     e.preventDefault()
     setError('')
+    setLoading(true)
 
     const formData = new FormData(e.currentTarget)
     const email = formData.get('email')
     const password = formData.get('password')
 
-    const res = await signIn('credentials', {
+    await signIn('credentials', {
       email,
       password,
-      redirect: false,
+      callbackUrl: redirect,
     })
-
-    if (res?.error) {
-      setError(res.error)
-      return
-    }
-
-    router.push(redirect)
   }
 
   return (
@@ -97,7 +107,6 @@ export default function LoginPage() {
             </div>
 
             <div className="flex items-center justify-between text-xs text-white/80">
-              
               <button type="button" className="hover:underline">
                 Forgot password?
               </button>
@@ -105,9 +114,17 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="btn-sh-gradient w-full mt-2 justify-center"
+              disabled={loading}
+              className="btn-sh-gradient w-full mt-2 justify-center disabled:opacity-70"
             >
-              Login
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <Spinner />
+                  <span>Logging in...</span>
+                </span>
+              ) : (
+                'Login'
+              )}
             </button>
           </form>
 

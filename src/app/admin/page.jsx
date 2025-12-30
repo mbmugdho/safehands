@@ -4,12 +4,30 @@ import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { Loader2 } from 'lucide-react'
+import {
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
+  XAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts'
 
 const statusClass = {
   Pending: 'badge badge-warning',
   Confirmed: 'badge badge-info',
   Completed: 'badge badge-success',
   Cancelled: 'badge badge-error',
+}
+
+// colors aligned with my brand palette
+const STATUS_COLORS = {
+  Pending: '#fbbf24',
+  Confirmed: '#0ea5e9',
+  Completed: '#22c55e',
+  Cancelled: '#f97316',
 }
 
 export default function AdminDashboardPage() {
@@ -111,6 +129,31 @@ export default function AdminDashboardPage() {
     (b) => b.status === 'Pending' || b.status === 'Confirmed'
   )
 
+  const totalBookings = bookings.length
+  const totalRevenue = bookings.reduce((sum, b) => {
+    const val =
+      typeof b.totalCost === 'number' ? b.totalCost : Number(b.totalCost) || 0
+    return sum + val
+  }, 0)
+
+  const totalActive = activeBookings.length
+
+  const statusCounts = ['Pending', 'Confirmed', 'Completed', 'Cancelled']
+    .map((status) => ({
+      name: status,
+      value: bookings.filter((b) => b.status === status).length,
+    }))
+    .filter((item) => item.value > 0)
+
+  const serviceMap = new Map()
+  bookings.forEach((b) => {
+    if (!serviceMap.has(b.serviceName)) {
+      serviceMap.set(b.serviceName, { serviceName: b.serviceName, count: 0 })
+    }
+    serviceMap.get(b.serviceName).count += 1
+  })
+  const serviceData = Array.from(serviceMap.values())
+
   return (
     <section className="min-h-[70vh] py-16 md:py-24">
       <div className="sh-container">
@@ -145,9 +188,112 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
+        {/* Error */}
         {!loading && error && (
           <div className="mt-8 rounded-xl bg-red-100 border border-red-300 px-4 py-3 text-sm text-red-700">
             {error}
+          </div>
+        )}
+
+        {!loading && !error && bookings.length > 0 && (
+          <div className="mt-8 space-y-6">
+            <div className="grid gap-4 md:grid-cols-3">
+              <div className="card-glass-brand p-4">
+                <p className="text-xs text-base-content/60 uppercase">
+                  Total bookings
+                </p>
+                <p className="mt-2 text-2xl font-bold text-brand-deep">
+                  {totalBookings}
+                </p>
+              </div>
+              <div className="card-glass-brand p-4">
+                <p className="text-xs text-base-content/60 uppercase">
+                  Total revenue
+                </p>
+                <p className="mt-2 text-2xl font-bold text-brand-deep">
+                  ${totalRevenue.toFixed(2)}
+                </p>
+              </div>
+              <div className="card-glass-brand p-4">
+                <p className="text-xs text-base-content/60 uppercase">
+                  Active (pending + confirmed)
+                </p>
+                <p className="mt-2 text-2xl font-bold text-brand-deep">
+                  {totalActive}
+                </p>
+              </div>
+            </div>
+
+            <div className="grid gap-6 lg:grid-cols-2">
+              <div className="card-glass-brand p-4 md:p-6">
+                <h2 className="text-sm md:text-base font-semibold text-brand-deep mb-2">
+                  Booking status distribution
+                </h2>
+                {statusCounts.length === 0 ? (
+                  <p className="text-xs text-base-content/60">
+                    No bookings yet to display.
+                  </p>
+                ) : (
+                  <div className="h-64">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={statusCounts}
+                          dataKey="value"
+                          nameKey="name"
+                          innerRadius="50%"
+                          outerRadius="80%"
+                          paddingAngle={3}
+                        >
+                          {statusCounts.map((entry, index) => (
+                            <Cell
+                              key={`cell-${entry.name}`}
+                              fill={STATUS_COLORS[entry.name] || '#0e86d4'}
+                            />
+                          ))}
+                        </Pie>
+                        <Tooltip
+                          formatter={(value, name) => [`${value}`, name]}
+                        />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                )}
+              </div>
+
+              <div className="card-glass-brand p-4 md:p-6">
+                <h2 className="text-sm md:text-base font-semibold text-brand-deep mb-2">
+                  Bookings per service
+                </h2>
+                {serviceData.length === 0 ? (
+                  <p className="text-xs text-base-content/60">
+                    No bookings yet to display by service.
+                  </p>
+                ) : (
+                  <div className="h-64">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={serviceData} barCategoryGap="40%">
+                        <XAxis
+                          dataKey="serviceName"
+                          tick={{ fontSize: 10 }}
+                          interval={0}
+                          angle={-20}
+                          textAnchor="end"
+                          height={50}
+                        />
+                        <Tooltip />
+                        <Bar
+                          dataKey="count"
+                          fill="#0e86d4"
+                          radius={[2, 2, 0, 0]}
+                          maxBarSize={35}
+                        />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         )}
 

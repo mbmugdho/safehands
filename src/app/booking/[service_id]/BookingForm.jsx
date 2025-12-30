@@ -70,13 +70,13 @@ export default function BookingForm({ service, billingMode }) {
     setLoading(true)
 
     try {
-      const res = await fetch('/api/auth/bookings', {
+      const res = await fetch('/api/auth/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           serviceId: service.id,
-          billingMode,
-          durationUnit,
+          billingMode, 
+          durationUnit, 
           durationValue: parsedDuration,
           division,
           district,
@@ -88,15 +88,15 @@ export default function BookingForm({ service, billingMode }) {
 
       const data = await res.json()
 
-      if (!res.ok) {
-        setError(data.error || 'Failed to create booking.')
+      if (!res.ok || !data.url) {
+        setError(data.error || 'Failed to start payment.')
         setLoading(false)
         return
       }
 
-      router.push('/my-bookings')
+      window.location = data.url
     } catch (err) {
-      console.error('Booking submit error', err)
+      console.error('Checkout submit error', err)
       setError('Something went wrong. Please try again.')
       setLoading(false)
     }
@@ -113,8 +113,8 @@ export default function BookingForm({ service, billingMode }) {
     <aside className="card-glass-brand p-6 sticky top-24">
       <h2 className="text-lg font-semibold text-brand-deep">Booking details</h2>
       <p className="mt-1 text-sm text-base-content/70">
-        Select billing type, duration, and your location. You will see the
-        total before confirming.
+        Select billing type, duration, and your location. You will see the total
+        before confirming.
       </p>
 
       <p className="mt-3 text-xs text-base-content/60">

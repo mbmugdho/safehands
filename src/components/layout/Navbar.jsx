@@ -56,7 +56,13 @@ export default function Navbar() {
       >
         <nav className="sh-container flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo.png" alt="SafeHands" width={34} height={34} />
+            <Image
+              src="/logo.png"
+              alt="SafeHands"
+              width={34}
+              height={34}
+              className="h-10 w-auto"
+            />
             <span className="text-lg tracking-[0.12em] font-extrabold">
               SafeHands
             </span>
