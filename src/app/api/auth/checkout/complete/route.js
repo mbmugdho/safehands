@@ -75,6 +75,8 @@ export async function POST(req) {
         ? session.amount_total / 100
         : Number(totalCost) || 0
 
+    const currency = (session.currency || 'usd').toUpperCase()
+
     const booking = await Booking.create({
       userId,
       serviceId,
@@ -88,8 +90,8 @@ export async function POST(req) {
       address,
       totalCost: numericTotalCost,
       currency,
-      status: 'Confirmed', 
-      stripeSessionId: sessionId, 
+      status: 'Confirmed',
+      stripeSessionId: sessionId,
     })
 
     const user = await User.findById(userId).select('name email').lean()

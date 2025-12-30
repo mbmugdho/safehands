@@ -31,7 +31,7 @@ const FAQS = [
 ]
 
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState(0)
+  const [openIndex, setOpenIndex] = useState(null)
 
   return (
     <section className="relative py-5 md:pb-20 ">

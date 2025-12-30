@@ -185,15 +185,15 @@ export default function MyBookingsPage() {
   useEffect(() => {
     if (sessionStatus === 'loading') return
 
-    if (sessionStatus === 'unauthenticated') {
-      router.replace(`/login?redirect=/my-bookings`)
-      return
-    }
-
     if (sessionStatus === 'authenticated') {
       loadBookings()
     }
-  }, [sessionStatus, router])
+  }, [sessionStatus])
+
+  if (sessionStatus === 'unauthenticated') {
+    router.replace(`/login?redirect=/my-bookings`)
+    return null
+  }
 
   const hasClearable = bookings.some((b) =>
     CLEARABLE_STATUSES.includes(b.status)
@@ -322,7 +322,7 @@ export default function MyBookingsPage() {
                     <button
                       type="button"
                       onClick={() => handleCancel(b.id)}
-                      className="px-3 py-1 rounded-full border border-red-300 text-red-700 hover:bg-red-50"
+                      className="px-3 py-1 rounded-full border border-red-300 text-red-700 "
                     >
                       Cancel
                     </button>
@@ -332,7 +332,7 @@ export default function MyBookingsPage() {
                     <button
                       type="button"
                       disabled
-                      className="px-3 py-1 rounded-full border border-sky-300 text-sky-700 bg-sky-50 cursor-default"
+                      className="px-3 py-1 rounded-full border border-sky-300 text-sky-700  cursor-default"
                     >
                       Confirmed
                     </button>
@@ -342,7 +342,7 @@ export default function MyBookingsPage() {
                     <button
                       type="button"
                       disabled
-                      className="px-3 py-1 rounded-full border border-emerald-300 text-emerald-700 bg-emerald-50 cursor-default"
+                      className="px-3 py-1 rounded-full border border-emerald-300 text-emerald-700  cursor-default"
                     >
                       Completed
                     </button>
@@ -352,7 +352,7 @@ export default function MyBookingsPage() {
                     <button
                       type="button"
                       disabled
-                      className="px-3 py-1 rounded-full border border-rose-300 text-rose-700 bg-rose-50 cursor-default"
+                      className="px-3 py-1 rounded-full border border-rose-300 text-rose-700  cursor-default"
                     >
                       Cancelled
                     </button>

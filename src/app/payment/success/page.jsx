@@ -67,12 +67,9 @@ export default function PaymentSuccessPage() {
               Payment successful
             </h1>
             <p className="mt-3 text-base-content/80">{message}</p>
-            <p className="mt-2 text-xs text-base-content/60">
+            <p className="m-6 text-xs text-base-content/60">
               Redirecting you to your bookings...
             </p>
-            <Link href="/my-bookings" className="btn-sh-gradient mt-6">
-              Go to My Bookings
-            </Link>
           </>
         )}
 
