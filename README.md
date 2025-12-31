@@ -3,7 +3,7 @@
   <img src="https://capsule-render.vercel.app/api?type=waving&color=0:4ade80,100:22c55e&height=120&section=header&text=SafeHands&fontSize=50&fontColor=ffffff&animation=fadeIn&desc=Baby%20Sitting%20%26%20Elderly%20Care%20Platform&descSize=18&descAlignY=75" />
 </p>
 
-<h1 align="center">🏠 SafeHands – Caregiving Service Platform</h1>
+<h1 align="center">SafeHands — Trusted Care Booking Platform (Full-Stack)</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=nextdotjs&logoColor=white"/>
