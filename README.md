@@ -1,125 +1,148 @@
-# SafeHands – Baby Sitting & Elderly Care Service Platform
+<!-- Banner -->
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:4ade80,100:22c55e&height=120&section=header&text=SafeHands&fontSize=50&fontColor=ffffff&animation=fadeIn&desc=Baby%20Sitting%20%26%20Elderly%20Care%20Platform&descSize=18&descAlignY=75" />
+</p>
 
-**Live demo:** [https://safehands-ltd.vercel.app/]
+<h1 align="center">🏠 SafeHands – Caregiving Service Platform</h1>
 
-SafeHands is a **full-stack caregiving service platform** for booking trusted caregivers for children, elderly family members, and sick people at home. Users can browse services, book caregivers by duration and location, pay via Stripe (test mode), and track bookings. Admins can manage bookings, update statuses, and view analytics.
-
-This project was built as a **final assignment**, focusing on making caregiving **simple, safe, and accessible**.
-
----
-
-## ✨ Features
-
-### User-Facing Features
-
-- **Responsive UI**
-  - Fully responsive across mobile, tablet, and desktop.
-  - Themed UI using **Tailwind CSS v4** + **DaisyUI**, with custom SafeHands styling.
-
-- **Home Page**
-  - Hero slider with caregiving motivation.
-  - About section describing the platform’s mission.
-  - Services overview: Baby Care, Elderly Care, Sick Care.
-  - Pricing overview (hourly, day shift, night shift, live-in).
-  - “How it works” steps, testimonials, statistics, FAQ.
-  - Newsletter subscription section.
-
-- **Services**
-  - `/services` – list of available services.
-  - `/service/[service_id]` – service detail page:
-    - Image, category, description, and tags.
-    - Pricing summary.
-    - “Book this service” button (redirects to login if not authenticated).
-
-- **Authentication (NextAuth)**
-  - Email + password login using Credentials provider.
-  - Registration requires NID, name, email, phone, and password.
-  - Password validation (≥6 chars, at least 1 uppercase + 1 lowercase).
-  - Role-based access:
-    - `user` – regular users
-    - `admin` – admins, defined via `ADMIN_EMAILS` env variable.
-  - Sessions persist across reloads.
-
-- **Dynamic Booking Flow**
-  - `/booking/[service_id]` – private route for logged-in users.
-  - Booking form:
-    - Billing mode: Hourly or Shift.
-    - Duration: hours or days (hourly converted to 8h/day if needed).
-    - Location: division, district, city, area, full address.
-    - Live total cost calculation.
-  - Stripe Checkout integration (test mode).
-  - After payment success:
-    - Booking created with status `Confirmed`.
-    - Email invoice sent to user.
-  - Payment cancellation redirects to `/payment/cancel`.
-
-- **My Bookings**
-  - `/my-bookings` – private route listing the logged-in user’s bookings.
-  - Shows service name, duration, location, total cost, status, booking ID.
-  - Actions:
-    - Cancel booking if status is `Pending`.
-    - Clear completed & cancelled bookings from user view.
-
-- **404 / Not Found**
-  - Custom `not-found.jsx` page with friendly “Go back home” button.
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=nextdotjs&logoColor=white"/>
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black"/>
+  <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Stripe-008CDD?style=for-the-badge&logo=stripe&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Tailwind-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
+</p>
 
 ---
 
-### Admin Features
+## 🔗 Live Links
 
-- **Admin Dashboard**
-  - `/admin` – protected, admin-only route.
-  - Displays:
-    - Total bookings, total revenue, active bookings.
-    - Status distribution chart (Pending / Confirmed / Completed / Cancelled).
-    - Bookings per service chart.
-  - Active bookings list:
-    - `Pending` bookings: Confirm / Cancel buttons.
-    - `Confirmed` bookings: Complete button.
-  - Status updates propagate to users in real-time.
+<p align="center">
+  <a href="https://safehands-ltd.vercel.app" target="_blank">
+    <img src="https://img.shields.io/badge/🌐%20Live%20Site-Visit%20Now-brightgreen?style=for-the-badge"/>
+  </a>
+  <a href="https://github.com/mbmugdho/safehands-client" target="_blank">
+    <img src="https://img.shields.io/badge/💻%20Client%20Repo-GitHub-blue?style=for-the-badge"/>
+  </a>
+</p>
 
-- **Service History**
-  - `/admin/history` – completed bookings only.
-  - Filter by date.
-  - Pagination for historical records.
-  - Tracks daily service counts and operational performance.
-
-- **Admin-only APIs**
-  - `GET /api/auth/admin` – fetch all bookings with user info.
-  - `PATCH /api/auth/admin` – update booking status (`Pending`, `Confirmed`, `Completed`, `Cancelled`).
+| Link Type | URL |
+|-----------|-----|
+| 🌐 **Live Site** | [https://safehands-ltd.vercel.app](https://safehands-ltd.vercel.app) |
+| 💻 **GitHub Repo** | [Repository Link](https://github.com/mbmugdho/safehands) |
 
 ---
 
-### Email Invoices
+## 📸 Screenshot
 
-- After successful payment:
-  - Email invoice via **Nodemailer** (SMTP/Gmail in dev).
-  - Includes service name, booking ID, date/time, duration, location, status, total cost, and link to `/my-bookings`.
+<p align="center">
+  <img src="./screenshots/homepage.png" alt="SafeHands Homepage" width="100%"/>
+</p>
+
+> 📁 Add your screenshot to a `screenshots` folder in your repo
 
 ---
 
-## 🛠 Tech Stack
+## 📋 Project Overview
 
-**Frontend**
-- Next.js 16 (App Router)
-- React 19 (preview)
-- Tailwind CSS v4 + DaisyUI
-- Framer Motion (animations)
-- Swiper (hero & testimonial sliders)
-- Lucide React & react-icons (icons)
-- Recharts (charts for admin)
+**SafeHands** is a **full-stack caregiving service platform** designed to connect families with trusted caregivers for:
 
-**Backend**
-- Next.js API Routes
-- NextAuth (Credentials provider)
-- MongoDB Atlas + Mongoose
-- Stripe (test payments)
-- Nodemailer (email invoices)
-- SweetAlert2 (confirmation dialogs)
+- 👶 **Baby Care** – Professional babysitting services
+- 👴 **Elderly Care** – Compassionate care for seniors
+- 🏥 **Sick Care** – Home-based care for ill family members
 
-**Deployment**
-- Vercel
-- Environment variables configured for dev and prod.
+Users can easily browse services, book caregivers by duration and location, pay securely via Stripe, and track their bookings. Administrators have access to a powerful dashboard to manage bookings, update statuses, and view business analytics.
+
+> 🎯 **Goal:** Making caregiving **simple, safe, and accessible** for everyone.
+
+---
+
+## 🛠️ Technologies Used
+
+<div align="center">
+
+### Frontend
+<p>
+  <img src="https://skillicons.dev/icons?i=nextjs,react,tailwind,vercel" alt="Frontend"/>
+</p>
+
+| Technology | Purpose |
+|------------|---------|
+| Next.js 16 | App Router & SSR |
+| React 19 | UI Components |
+| Tailwind CSS v4 | Styling |
+| DaisyUI | UI Components |
+| Framer Motion | Animations |
+| Swiper | Sliders |
+| Recharts | Admin Charts |
+
+### Backend
+<p>
+  <img src="https://skillicons.dev/icons?i=nodejs,mongodb,vercel" alt="Backend"/>
+</p>
+
+| Technology | Purpose |
+|------------|---------|
+| Next.js API Routes | Backend APIs |
+| NextAuth | Authentication |
+| MongoDB Atlas | Database |
+| Mongoose | ODM |
+| Stripe | Payments |
+| Nodemailer | Email Invoices |
+
+</div>
+
+---
+
+## ✨ Core Features
+
+### 👤 User Features
+
+| Feature | Description |
+|---------|-------------|
+| 🔐 **Authentication** | Email/password login with NextAuth, role-based access |
+| 📱 **Responsive Design** | Fully responsive across all devices |
+| 🏠 **Homepage** | Hero slider, services overview, pricing, testimonials, FAQ |
+| 📋 **Service Listing** | Browse all available caregiving services |
+| 📄 **Service Details** | View detailed service info, pricing, and book directly |
+| 📝 **Dynamic Booking** | Select duration, location, calculate costs in real-time |
+| 💳 **Stripe Payments** | Secure checkout with test mode integration |
+| 📧 **Email Invoices** | Automatic invoice sent after successful payment |
+| 📊 **My Bookings** | Track, cancel, or clear booking history |
+
+### 👨‍💼 Admin Features
+
+| Feature | Description |
+|---------|-------------|
+| 📈 **Dashboard Analytics** | Total bookings, revenue, active bookings stats |
+| 📊 **Visual Charts** | Status distribution & bookings per service |
+| ✅ **Booking Management** | Confirm, complete, or cancel bookings |
+| 📜 **Service History** | View completed bookings with date filters |
+| 📄 **Pagination** | Efficient browsing of historical records |
+
+---
+
+## 📦 Dependencies
+
+### Client-Side Dependencies
+
+{
+  "next": "^16.0.0",
+  "react": "^19.0.0",
+  "react-dom": "^19.0.0",
+  "tailwindcss": "^4.0.0",
+  "daisyui": "^4.x.x",
+  "framer-motion": "^11.x.x",
+  "swiper": "^11.x.x",
+  "recharts": "^2.x.x",
+  "lucide-react": "^0.x.x",
+  "react-icons": "^5.x.x",
+  "next-auth": "^4.x.x",
+  "@stripe/stripe-js": "^2.x.x",
+  "sweetalert2": "^11.x.x",
+  "mongoose": "^8.x.x",
+  "nodemailer": "^6.x.x"
+}
 
 
 
