@@ -33,16 +33,6 @@
 
 ---
 
-## 📸 Screenshot
-
-<p align="center">
-  <img src="./screenshots/homepage.png" alt="SafeHands Homepage" width="100%"/>
-</p>
-
-> 📁 Add your screenshot to a `screenshots` folder in your repo
-
----
-
 ## 📋 Project Overview
 
 **SafeHands** is a **full-stack caregiving service platform** designed to connect families with trusted caregivers for:
@@ -124,25 +114,23 @@ Users can easily browse services, book caregivers by duration and location, pay 
 
 ## 📦 Dependencies
 
-### Client-Side Dependencies
-
-{
-  "next": "^16.0.0",
-  "react": "^19.0.0",
-  "react-dom": "^19.0.0",
-  "tailwindcss": "^4.0.0",
-  "daisyui": "^4.x.x",
-  "framer-motion": "^11.x.x",
-  "swiper": "^11.x.x",
-  "recharts": "^2.x.x",
-  "lucide-react": "^0.x.x",
-  "react-icons": "^5.x.x",
-  "next-auth": "^4.x.x",
-  "@stripe/stripe-js": "^2.x.x",
-  "sweetalert2": "^11.x.x",
-  "mongoose": "^8.x.x",
-  "nodemailer": "^6.x.x"
-}
+"dependencies": {
+    "bcryptjs": "^3.0.3",
+    "daisyui": "^5.5.14",
+    "framer-motion": "^12.23.26",
+    "lucide-react": "^0.562.0",
+    "mongoose": "^9.0.2",
+    "next": "16.1.1",
+    "next-auth": "^4.24.13",
+    "nodemailer": "^7.0.12",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-icons": "^5.5.0",
+    "recharts": "^3.6.0",
+    "stripe": "^20.1.0",
+    "sweetalert2": "^11.26.17",
+    "swiper": "^12.0.3"
+  }
 
 
 
