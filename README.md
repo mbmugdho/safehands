@@ -1,7 +1,3 @@
-<!-- Banner -->
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:4ade80,100:22c55e&height=120&section=header&text=SafeHands&fontSize=50&fontColor=ffffff&animation=fadeIn&desc=Baby%20Sitting%20%26%20Elderly%20Care%20Platform&descSize=18&descAlignY=75" />
-</p>
 
 <h1 align="center">SafeHands — Trusted Care Booking Platform (Full-Stack)</h1>
 
@@ -114,7 +110,11 @@ Users can easily browse services, book caregivers by duration and location, pay 
 
 ## 📦 Dependencies
 
-"dependencies": {
+### Project Dependencies
+
+```json
+{
+  "dependencies": {
     "bcryptjs": "^3.0.3",
     "daisyui": "^5.5.14",
     "framer-motion": "^12.23.26",
@@ -131,6 +131,5 @@ Users can easily browse services, book caregivers by duration and location, pay 
     "sweetalert2": "^11.26.17",
     "swiper": "^12.0.3"
   }
-
-
+}
 
