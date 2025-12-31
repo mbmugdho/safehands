@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:4ade80,100:22c55e&height=180&section=header&text=SafeHands&fontSize=50&fontColor=ffffff&animation=fadeIn&desc=Trusted%20Care%20Booking%20Platform%20(Full-Stack)&descSize=18&descAlignY=70" />
+</p>
 
 <h1 align="center">SafeHands — Trusted Care Booking Platform (Full-Stack)</h1>
 
